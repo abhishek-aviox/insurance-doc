@@ -183,7 +183,8 @@
                             <label>Additional Insured - Auto Liability:</label>
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="ai_auto_liability"
-                                    name="ai_auto_liability" onchange="toggleInputField(this, 'form_number_auto')">
+                                    name="ai_auto_liability"
+                                    onchange="toggleInputFields(this, ['form_number_auto', 'vol_hide_0'])">
                                 <label class="custom-control-label" for="ai_auto_liability">No</label>
                                 <input type="text" id="form_number_auto" name="form_number_auto"
                                     placeholder="Enter form number (if Yes)" style="display: none;">
@@ -195,10 +196,11 @@
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="primary_general_liability"
                                     name="primary_general_liability"
-                                    onchange="toggleInputField(this, 'form_number_primary_gl')">
+                                    onchange="toggleInputFields(this, ['form_number_primary_gl', '4_hide_0', '4_hide_1'])">
                                 <label class="custom-control-label" for="primary_general_liability">No</label>
                                 <input type="text" name="form_number_primary_gl" , id="form_number_primary_gl"
-                                    placeholder="Enter form number (if Yes)" style="display: none;">
+                                    placeholder="Enter form number (if Yes)" style="display: none;"
+                                    onchange="updateText(this, 'Primary Coverage - General Liability', '4_hide_1')">
 
                             </div>
                         </div>
@@ -207,10 +209,11 @@
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="primary_auto_liability"
                                     name="primary_auto_liability"
-                                    onchange="toggleInputField(this, 'form_number_primary_auto')">
+                                    onchange="toggleInputFields(this, ['form_number_primary_auto', '4_hide_0', '4_hide_2'])">
                                 <label class="custom-control-label" for="primary_auto_liability">No</label>
                                 <input type="text" id="form_number_primary_auto" name="form_number_primary_auto"
-                                    placeholder="Enter form number (if Yes)" style="display: none;">
+                                    placeholder="Enter form number (if Yes)" style="display: none;"
+                                    onchange="updateText(this, 'Primary Coverage - Auto Liability', '4_hide_2')">
 
                             </div>
                         </div>
@@ -223,10 +226,11 @@
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="waiver_general_liability"
                                     name="waiver_general_liability"
-                                    onchange="toggleInputField(this, 'form_number_waiver_gl')">
+                                    onchange="toggleInputFields(this, ['form_number_waiver_gl', '5_hide_0', '5_hide_1'])">
                                 <label class="custom-control-label" for="waiver_general_liability">No</label>
                                 <input type="text" id='form_number_waiver_gl' name="form_number_waiver_gl"
-                                    placeholder="Enter form number (if Yes)" style="display: none;">
+                                    placeholder="Enter form number (if Yes)" style="display: none;"
+                                    onchange="updateText(this, 'Waiver of Subrogation - General Liability', '5_hide_1')">
 
                             </div>
                         </div>
@@ -235,10 +239,11 @@
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="waiver_auto_liability"
                                     name="waiver_auto_liability"
-                                    onchange="toggleInputField(this, 'form_number_waiver_auto')">
+                                    onchange="toggleInputFields(this, ['form_number_waiver_auto', '5_hide_0', '5_hide_2'])">
                                 <label class="custom-control-label" for="waiver_auto_liability">No</label>
                                 <input type="text" name="form_number_waiver_auto" id='form_number_waiver_auto'
-                                    placeholder="Enter form number (if Yes)" style="display: none;">
+                                    placeholder="Enter form number (if Yes)" style="display: none;"
+                                    onchange="updateText(this, 'Waiver of Subrogation - Auto Liability', '5_hide_2')">
 
                             </div>
                         </div>
@@ -247,10 +252,11 @@
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="waiver_work_comp"
                                     name="waiver_work_comp"
-                                    onchange="toggleInputField(this, 'form_number_waiver_work_comp')">
+                                    onchange="toggleInputFields(this, ['form_number_waiver_work_comp', '5_hide_0', '5_hide_3'])">
                                 <label class="custom-control-label" for="waiver_work_comp">No</label>
                                 <input type="text" id='form_number_waiver_work_comp' name="form_number_waiver_work_comp"
-                                    placeholder="Enter form number (if Yes)" style="display: none;">
+                                    placeholder="Enter form number (if Yes)" style="display: none;"
+                                    onchange="updateText(this, 'Waiver of Subrogation - Work Comp', '5_hide_3')">
 
                             </div>
                         </div>
@@ -258,15 +264,18 @@
                             <label>Umbrella:</label>
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="umbrella_coi" name="umbrella"
-                                    onchange="toggleInputField(this, 'umbrella')">
+                                    onchange="toggleInputFields(this, ['umbrella_hide','6_hide_1', '6_hide_0' ])">
                                 <label class="custom-control-label" for="umbrella_coi">No</label>
-                                <input type="text" id="umbrella" name="umbrella" value="Yes" readonly>
-
                             </div>
                         </div>
-                        <label>Lines of Business Excess Over:</label>
-                        <input type="text" class="form-control" name="lines_business_excess" value="">
-                        <div id="general_hide0">
+                        <div id="umbrella_hide" style="display: none;">
+                            <label>Lines of Business Excess Over:</label>
+                            <input type="text" class="form-control" name="lines_business_excess" value=""
+                                onchange="updateText(this, 'Lines of Business Excess Over', '6_hide_0')">
+
+                        </div>
+
+                        <div id="general_hide0" style="display: none;">
                             <label>30 Day Notice of Cancellation:</label>
                             <input type="text" class="form-control" name="notice_cancellation" value="">
                         </div>
@@ -289,7 +298,7 @@
                 form</p>
         </div>
 
-        <div class="section" id="gernal_doc_hide1" style="display: none;">
+        <div class="section">
             <div class="title">
                 <h5>ADDITIONAL INSURED - GENERAL LIABILITY</h5>
             </div>
@@ -297,38 +306,49 @@
                 insureds, as required pursuant to a written contract with a named insured, per attached Policy forms
                 <span class="highlight">B28</span> and <span class="highlight">B30</span>:
             </p>
-            <p>THE CERTIFICATE HOLDER LISTED ON THIS CERTIFICATE OF LIABILITY INSURANCE, AND (REPLACE WITH <span
-                    class="highlight">B23</span> OR leave default wording if <span class="highlight">B23</span> is
+            <p id="vol_hide_0" style="display: none;">THE CERTIFICATE HOLDER LISTED ON THIS CERTIFICATE OF
+                LIABILITY INSURANCE, AND (REPLACE WITH <span class="highlight">B23</span> OR leave default wording if
+                <span class="highlight">B23</span> is
                 blank) EACH OTHER PERSON OR ORGANIZATION REQUIRED TO BE INCLUDED <span class="highlight">AS/ARE</span>
-                AN ADDITIONAL INSURED PURSUANT TO A WRITTEN CONTRACT WITH THE NAMED INSURED.</p>
+                AN ADDITIONAL INSURED PURSUANT TO A WRITTEN CONTRACT WITH THE NAMED INSURED.
+            </p>
         </div>
 
         <div class="section">
             <div class="title">
                 <h5>ADDITIONAL INSURED - AUTOMOBILE LIABILITY </h5>
             </div>
-            <p>The Automobile Liability policy, if required by written contract, includes coverage for Additional
+            <p id="4_hide_0" style="display: none;">The Automobile Liability policy, if required by written contract,
+                includes coverage for Additional
                 Insureds as required by such written contract, per attached Policy forms <span
-                    class="highlight">B32</span></p>
+                    class=" highlight">B32</span></p>
+            <p id="4_hide_1" style="display: none;"></p>
+            <p id="4_hide_2" style="display: none;"></p>
         </div>
 
         <div class="section">
             <div class="title">
                 <h5>PRIMARY COVERAGE</h5>
             </div>
-            <p>The General Liability and Automobile Liability policies/policy <span class="highlight">are/is</span>
+            <p id="5_hide_0" style="display: none;">The General Liability and Automobile Liability policies/policy <span
+                    class="highlight">are/is</span>
                 primary and not excess of or contributing with other insurance, where required by written lease or
                 written CONTRACT per attached policy forms (<span class="highlight">B34, B36</span>)</p>
+            <p id="5_hide_1" style="display: none;"></p>
+            <p id="5_hide_2" style="display: none;"></p>
+            <p id="5_hide_3" style="display: none;"></p>
         </div>
 
         <div class="section">
             <div class="title">
                 <h5>WAIVER OF SUBROGATION</h5>
             </div>
-            <p>The General Liability, Automobile Liability, Workers’ Compensation and Employers Liability
+            <p id="6_hide_1" style="display: none;">The General Liability, Automobile Liability, Workers’ Compensation
+                and Employers Liability
                 policies/policy include a Waiver of Subrogation in favor of the certholder and any other person or
                 organization, BUT ONLY to the extent required by written contract, per attached policy forms (<span
                     class="highlight">B38, B40, B42</span>)</p>
+            <p id="6_hide_0" style="display: none;"></p>
         </div>
 
         <div class="section">
@@ -419,6 +439,14 @@
                     }
                 }
             });
+        }
+
+        function updateText(inputElement, mainText, displayId) {
+            console.log("111111111111111111111111111111")
+            let displayField = document.getElementById(displayId);
+            console.log("displayId", displayId)
+            console.log(mainText, "displayId")
+            displayField.textContent = inputElement.value ? `${mainText}: ${inputElement.value}` : "";
         }
 
     </script>
