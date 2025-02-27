@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Certificate Form</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .conditional {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <form class="container mt-4" id="insuranceForm" method="post">
+        {% csrf_token %}
+        <h2>Insured Details</h2>
+        <div class="form-group">
+            <label>Insured Name:</label>
+            <input type="text" class="form-control" name="insured_name" value="ABC Company, Inc">
+        </div>
+
+        <h2>Certificate Holder</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" class="form-control" name="cert_holder_name"
+                        value="Mr. Builder Contracting Company Inc">
+                </div>
+                <div class="form-group">
+                    <label>City:</label>
+                    <input type="text" class="form-control" name="cert_holder_city" value="Los Angeles">
+                </div>
+                <div class="form-group">
+                    <label>ZIP:</label>
+                    <input type="text" class="form-control" name="cert_holder_zip" value="90001">
+                </div>
+                <div class="form-group">
+                    <label>Address 2:</label>
+                    <input type="text" class="form-control" name="cert_holder_address2" value="">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Address:</label>
+                    <input type="text" class="form-control" name="cert_holder_address" value="123 Main St">
+                </div>
+                <div class="form-group">
+                    <label>State:</label>
+                    <input type="text" class="form-control" name="cert_holder_state" value="CA">
+                </div>
+                <div class="form-group">
+                    <label>Name 2:</label>
+                    <input type="text" class="form-control" name="cert_holder_name2" value="">
+                </div>
+            </div>
+        </div>
+
+
+        <h2>Delivery Method</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" class="form-control" name="email" value="cert@mrbulderco.com">
+                </div>
+                <div class="form-group">
+                    <label>CC to Matt:</label>
+                    <input type="email" class="form-control" name="cc_matt" value="">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>CC to Insured:</label>
+                    <input type="email" class="form-control" name="cc_insured" value="">
+                </div>
+                <div class="form-group">
+                    <label>Subject:</label>
+                    <input type="text" class="form-control" name="subject_line" value="">
+                </div>
+            </div>
+        </div>
+
+        <h2>Line of Business</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>General Liability:</label>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="general_liability"
+                            name="general_liability"
+                            onchange="toggleInputFields(this, ['general_hide0', 'general_hide9', 'general_hide8', 'general_hide7', 'general_hide6'])">
+                        <label class="custom-control-label" for="general_liability">No</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Auto Liability:</label>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="auto_liability" name="auto_liability"
+                            onchange="toggleInputFields(this, ['atuo_liability0', 'atuo_liability1', 'atuo_liability2'])">
+                        <label class="custom-control-label" for="auto_liability">No</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Work Comp:</label>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="work_comp" name="work_comp"
+                            onchange="toggleInputFields(this, ['work_hide0', 'general_hide0'])">
+                        <label class="custom-control-label" for="work_comp">No</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Umbrella:</label>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="umbrella" name="umbrella"
+                            onchange="toggleInputFields(this, ['umbrella_hide0', 'umbrella_hide1', 'umbrella_hide2'])">
+                        <label class="custom-control-label" for="umbrella">No</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>AI Name</h2>
+                <div class="form-group">
+                    <label>AI Name:</label>
+                    <input type="text" class="form-control" name="ai_name"
+                        value="Mr. Builder Contracting Company, its directors, agents and employees">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2>Job Location</h2>
+                <div class="form-group">
+                    <label>Job Location:</label>
+                    <input type="text" class="form-control" name="job_location"
+                        value="1000 Wiltshire, Beverly Hills, CA 90210">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <h2>COI Wordings</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div id="general_hide7" style="display: none;">
+                            <label>Additional Insured - General Liability Ongoing Operations:</label>
+                            <div class="custom-control custom-switch toggle-container">
+                                <input type="checkbox" class="custom-control-input toggle-switch"
+                                    id="ai_general_liability" name="ai_general_liability"
+                                    onchange="toggleInputFields(this, ['form_number_gl_ongoing', 'gernal_doc_hide0', 'gernal_doc_hide1'])">
+                                <label class="custom-control-label" for="ai_general_liability">No</label>
+                                <input type="text" class="toggle-input" id="form_number_gl_ongoing"
+                                    name="form_number_gl_ongoing" placeholder="Enter form number (if Yes)"
+                                    style="display: none;">
+                            </div>
+                        </div>
+                        <div id="general_hide8" style="display: none;">
+                            <label>Additional Insured - General Liability Complete Operations:</label>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="ai_complete_operations"
+                                    name="ai_complete_operations"
+                                    onchange="toggleInputField(this, 'form_number_gl_complete')">
+                                <label class="custom-control-label" for="ai_complete_operations">No</label>
+                                <input type="text" name="form_number_gl_complete" id="form_number_gl_complete"
+                                    placeholder="Enter form number (if Yes)" style="display: none;">
+
+                            </div>
+                        </div>
+                        <div id="atuo_liability0" style="display: none;">
+                            <label>Additional Insured - Auto Liability:</label>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="ai_auto_liability"
+                                    name="ai_auto_liability" onchange="toggleInputField(this, 'form_number_auto')">
+                                <label class="custom-control-label" for="ai_auto_liability">No</label>
+                                <input type="text" id="form_number_auto" name="form_number_auto"
+                                    placeholder="Enter form number (if Yes)" style="display: none;">
+
+                            </div>
+                        </div>
+                        <div id="general_hide9" style="display: none;">
+                            <label>Primary Coverage - General Liability:</label>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="primary_general_liability"
+                                    name="primary_general_liability"
+                                    onchange="toggleInputField(this, 'form_number_primary_gl')">
+                                <label class="custom-control-label" for="primary_general_liability">No</label>
+                                <input type="text" name="form_number_primary_gl" , id="form_number_primary_gl"
+                                    placeholder="Enter form number (if Yes)" style="display: none;">
+
+                            </div>
+                        </div>
+                        <div id="atuo_liability1" style="display: none;">
+                            <label>Primary Coverage - Auto Liability:</label>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="primary_auto_liability"
+                                    name="primary_auto_liability"
+                                    onchange="toggleInputField(this, 'form_number_primary_auto')">
+                                <label class="custom-control-label" for="primary_auto_liability">No</label>
+                                <input type="text" id="form_number_primary_auto" name="form_number_primary_auto"
+                                    placeholder="Enter form number (if Yes)" style="display: none;">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div id="general_hide6" style="display: none;">
+                            <label>Waiver of Subrogation - General Liability:</label>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="waiver_general_liability"
+                                    name="waiver_general_liability"
+                                    onchange="toggleInputField(this, 'form_number_waiver_gl')">
+                                <label class="custom-control-label" for="waiver_general_liability">No</label>
+                                <input type="text" id='form_number_waiver_gl' name="form_number_waiver_gl"
+                                    placeholder="Enter form number (if Yes)" style="display: none;">
+
+                            </div>
+                        </div>
+                        <div id="atuo_liability2" style="display: none;">
+                            <label>Waiver of Subrogation - Auto Liability:</label>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="waiver_auto_liability"
+                                    name="waiver_auto_liability"
+                                    onchange="toggleInputField(this, 'form_number_waiver_auto')">
+                                <label class="custom-control-label" for="waiver_auto_liability">No</label>
+                                <input type="text" name="form_number_waiver_auto" id='form_number_waiver_auto'
+                                    placeholder="Enter form number (if Yes)" style="display: none;">
+
+                            </div>
+                        </div>
+                        <div id="work_hide0" style="display: none;">
+                            <label>Waiver of Subrogation - Work Comp:</label>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="waiver_work_comp"
+                                    name="waiver_work_comp"
+                                    onchange="toggleInputField(this, 'form_number_waiver_work_comp')">
+                                <label class="custom-control-label" for="waiver_work_comp">No</label>
+                                <input type="text" id='form_number_waiver_work_comp' name="form_number_waiver_work_comp"
+                                    placeholder="Enter form number (if Yes)" style="display: none;">
+
+                            </div>
+                        </div>
+                        <div id="umbrella_hide0" style="display: none;">
+                            <label>Umbrella:</label>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="umbrella_coi" name="umbrella"
+                                    onchange="toggleInputField(this, 'umbrella')">
+                                <label class="custom-control-label" for="umbrella_coi">No</label>
+                                <input type="text" id="umbrella" name="umbrella" value="Yes" readonly>
+
+                            </div>
+                        </div>
+                        <label>Lines of Business Excess Over:</label>
+                        <input type="text" class="form-control" name="lines_business_excess" value="">
+                        <div id="general_hide0">
+                            <label>30 Day Notice of Cancellation:</label>
+                            <input type="text" class="form-control" name="notice_cancellation" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <h2>Additional Information</h2>
+        <div class="form-group">
+            <label>Language to be added to COI (if necessary):</label>
+            <textarea class="form-control" name="additional_language" rows="3"></textarea>
+        </div>
+        <div class="section">
+            <p><strong>Note:</strong> Words in red will need to be edited as necessary.</p>
+            <p id="gernal_doc_hide0" style="display: none;"><strong>RE:</strong> All California Operations per policy
+                form</p>
+        </div>
+
+        <div class="section" id="gernal_doc_hide1" style="display: none;">
+            <div class="title">
+                <h5>ADDITIONAL INSURED - GENERAL LIABILITY</h5>
+            </div>
+            <p>For General Liability, if required by written contract, the following are included as additional
+                insureds, as required pursuant to a written contract with a named insured, per attached Policy forms
+                <span class="highlight">B28</span> and <span class="highlight">B30</span>:
+            </p>
+            <p>THE CERTIFICATE HOLDER LISTED ON THIS CERTIFICATE OF LIABILITY INSURANCE, AND (REPLACE WITH <span
+                    class="highlight">B23</span> OR leave default wording if <span class="highlight">B23</span> is
+                blank) EACH OTHER PERSON OR ORGANIZATION REQUIRED TO BE INCLUDED <span class="highlight">AS/ARE</span>
+                AN ADDITIONAL INSURED PURSUANT TO A WRITTEN CONTRACT WITH THE NAMED INSURED.</p>
+        </div>
+
+        <div class="section">
+            <div class="title">
+                <h5>ADDITIONAL INSURED - AUTOMOBILE LIABILITY </h5>
+            </div>
+            <p>The Automobile Liability policy, if required by written contract, includes coverage for Additional
+                Insureds as required by such written contract, per attached Policy forms <span
+                    class="highlight">B32</span></p>
+        </div>
+
+        <div class="section">
+            <div class="title">
+                <h5>PRIMARY COVERAGE</h5>
+            </div>
+            <p>The General Liability and Automobile Liability policies/policy <span class="highlight">are/is</span>
+                primary and not excess of or contributing with other insurance, where required by written lease or
+                written CONTRACT per attached policy forms (<span class="highlight">B34, B36</span>)</p>
+        </div>
+
+        <div class="section">
+            <div class="title">
+                <h5>WAIVER OF SUBROGATION</h5>
+            </div>
+            <p>The General Liability, Automobile Liability, Workers’ Compensation and Employers Liability
+                policies/policy include a Waiver of Subrogation in favor of the certholder and any other person or
+                organization, BUT ONLY to the extent required by written contract, per attached policy forms (<span
+                    class="highlight">B38, B40, B42</span>)</p>
+        </div>
+
+        <div class="section">
+            <div class="title">
+                <h5>UMBRELLA/EXCESS LIABILITY</h5>
+            </div>
+            <p>This policy is over the underlying General Liability, Automobile Liability and Employer's Liability
+                policies/policy (<span class="highlight">B44</span>)</p>
+        </div>
+
+        <div class="section">
+            <div class="title">
+                <h5>30 DAY NOTICE OF CANCELLATION</h5>
+            </div>
+            <p>30-day Notice of Cancellation applies to General Liability and Workers' Compensation policy/policies, per
+                Endorsement form <span class="highlight">B46, B47</span>, if required by a written contract.</p>
+        </div>
+
+        <div class="section">
+            <div class="title">
+                <h5>Job Location</h5>
+            </div>
+            <p><span class="highlight">B24</span></p>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+    {% if submitted %}
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Submission Successful</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Your submission has been received successfully!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#confirmationModal').modal('show');
+        });
+    </script>
+    {% endif %}
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // function updateToggleLabel(toggle) {
+        //     const label = toggle.nextElementSibling;
+        //     label.textContent = toggle.checked ? 'Yes' : 'No';
+        // }
+        function toggleInputField(checkbox, inputId) {
+            const inputField = document.getElementById(inputId);
+            if (checkbox.checked) {
+                inputField.style.display = "block";
+            } else {
+                inputField.style.display = "none";
+                inputField.value = ""; // Clear input field when hiding
+            }
+        }
+
+        function toggleInputFields(checkbox, inputIds) {
+            inputIds.forEach(inputId => {
+                const inputField = document.getElementById(inputId);
+                if (inputField) {
+                    console.log("checkbox.checked", checkbox.checked)
+                    if (checkbox.checked) {
+                        inputField.style.display = "block";
+                        style = "display: none;"
+                        inputField.value = ""; // Clear input field when hiding
+                    } else {
+                        inputField.style.display = "none";
+                    }
+                }
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>
