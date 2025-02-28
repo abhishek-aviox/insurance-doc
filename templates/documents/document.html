@@ -8,6 +8,30 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        body {
+            background-color: #ffffff;
+            /* White background for a clean look */
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            /* Reduced spacing between form groups */
+        }
+
+        h2 {
+            margin-top: 1.5rem;
+            /* Spacing above headings */
+            color: #333;
+            /* Darker color for headings */
+        }
+
+        .section {
+            padding: 1rem;
+            /* Reduced padding for sections */
+            margin-bottom: 1rem;
+            /* Spacing between sections */
+        }
+
         .conditional {
             display: none;
         }
@@ -31,14 +55,16 @@
                     <input type="text" class="form-control" name="cert_holder_name"
                         value="Mr. Builder Contracting Company Inc">
                 </div>
+
                 <div class="form-group">
                     <label>City:</label>
                     <input type="text" class="form-control" name="cert_holder_city" value="Los Angeles">
                 </div>
                 <div class="form-group">
-                    <label>ZIP:</label>
-                    <input type="text" class="form-control" name="cert_holder_zip" value="90001">
+                    <label>Address:</label>
+                    <input type="text" class="form-control" name="cert_holder_address" value="123 Main St">
                 </div>
+
                 <div class="form-group">
                     <label>Address 2:</label>
                     <input type="text" class="form-control" name="cert_holder_address2" value="">
@@ -46,17 +72,19 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Address:</label>
-                    <input type="text" class="form-control" name="cert_holder_address" value="123 Main St">
+                    <label>Name 2:</label>
+                    <input type="text" class="form-control" name="cert_holder_name2" value="">
                 </div>
+
                 <div class="form-group">
                     <label>State:</label>
                     <input type="text" class="form-control" name="cert_holder_state" value="CA">
                 </div>
                 <div class="form-group">
-                    <label>Name 2:</label>
-                    <input type="text" class="form-control" name="cert_holder_name2" value="">
+                    <label>ZIP:</label>
+                    <input type="text" class="form-control" name="cert_holder_zip" value="90001">
                 </div>
+
             </div>
         </div>
 
@@ -68,7 +96,7 @@
                     <label>Email:</label>
                     <input type="email" class="form-control" name="email" value="cert@mrbulderco.com">
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="hide_cc" style="display: none;">
                     <label>CC to Matt:</label>
                     <input type="email" class="form-control" name="cc_matt" value="">
                 </div>
@@ -76,7 +104,11 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>CC to Insured:</label>
-                    <input type="email" class="form-control" name="cc_insured" value="">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="cc_insured" name="cc_insured"
+                            onchange="toggleInputFields(this, ['hide_cc']); updateLabel(this)">
+                        <label class="custom-control-label" for="cc_insured" id="cc_insured_label">No</label>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Subject:</label>
@@ -134,15 +166,16 @@
             <div class="col-md-6">
                 <h2>AI Name</h2>
                 <div class="form-group">
-                    <label>AI Name:</label>
+
                     <input type="text" class="form-control" name="ai_name"
-                        value="Mr. Builder Contracting Company, its directors, agents and employees">
+                        value="Mr. Builder Contracting Company, its directors, agents and employees"
+                        onchange="handleInputChange('B23Value', this.value)">
                 </div>
             </div>
             <div class="col-md-6">
                 <h2>Job Location</h2>
                 <div class="form-group">
-                    <label>Job Location:</label>
+
                     <input type="text" class="form-control" name="job_location"
                         value="1000 Wiltshire, Beverly Hills, CA 90210">
                 </div>
@@ -160,11 +193,11 @@
                             <div class="custom-control custom-switch toggle-container">
                                 <input type="checkbox" class="custom-control-input toggle-switch"
                                     id="ai_general_liability" name="ai_general_liability"
-                                    onchange="toggleInputFields(this, ['form_number_gl_ongoing', 'gernal_doc_hide0', 'gernal_doc_hide1'])">
+                                    onchange="toggleInputFields(this, ['form_number_gl_ongoing', 'gernal_doc_hide0', 'gernal_doc_hide1']); handleCheckboxChange(this, 'B28')">
                                 <label class="custom-control-label" for="ai_general_liability">No</label>
                                 <input type="text" class="toggle-input" id="form_number_gl_ongoing"
                                     name="form_number_gl_ongoing" placeholder="Enter form number (if Yes)"
-                                    style="display: none;">
+                                    onchange="handleInputChange('B28Value', this.value)" style="display: none;">
                             </div>
                         </div>
                         <div id="general_hide8" style="display: none;">
@@ -172,10 +205,11 @@
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="ai_complete_operations"
                                     name="ai_complete_operations"
-                                    onchange="toggleInputField(this, 'form_number_gl_complete')">
+                                    onchange="toggleInputField(this, 'form_number_gl_complete'); handleCheckboxChange(this, 'B30')">
                                 <label class="custom-control-label" for="ai_complete_operations">No</label>
                                 <input type="text" name="form_number_gl_complete" id="form_number_gl_complete"
-                                    placeholder="Enter form number (if Yes)" style="display: none;">
+                                    placeholder="Enter form number (if Yes)"
+                                    onchange="handleInputChange('B30Value', this.value)" style="display: none;">
 
                             </div>
                         </div>
@@ -187,7 +221,8 @@
                                     onchange="toggleInputFields(this, ['form_number_auto', 'vol_hide_0'])">
                                 <label class="custom-control-label" for="ai_auto_liability">No</label>
                                 <input type="text" id="form_number_auto" name="form_number_auto"
-                                    placeholder="Enter form number (if Yes)" style="display: none;">
+                                    placeholder="Enter form number (if Yes)"
+                                    onchange="handleInputChange('B32Value', this.value)" style="display: none;">
 
                             </div>
                         </div>
@@ -200,7 +235,7 @@
                                 <label class="custom-control-label" for="primary_general_liability">No</label>
                                 <input type="text" name="form_number_primary_gl" , id="form_number_primary_gl"
                                     placeholder="Enter form number (if Yes)" style="display: none;"
-                                    onchange="updateText(this, 'Primary Coverage - General Liability', '4_hide_1')">
+                                    onchange="handleInputChange('B34Value', this.value)">
 
                             </div>
                         </div>
@@ -213,24 +248,24 @@
                                 <label class="custom-control-label" for="primary_auto_liability">No</label>
                                 <input type="text" id="form_number_primary_auto" name="form_number_primary_auto"
                                     placeholder="Enter form number (if Yes)" style="display: none;"
-                                    onchange="updateText(this, 'Primary Coverage - Auto Liability', '4_hide_2')">
+                                    onchange="handleInputChange('B36Value', this.value)">
 
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class=" col-md-6">
                     <div class="form-group">
                         <div id="general_hide6" style="display: none;">
                             <label>Waiver of Subrogation - General Liability:</label>
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="waiver_general_liability"
                                     name="waiver_general_liability"
-                                    onchange="toggleInputFields(this, ['form_number_waiver_gl', '5_hide_0', '5_hide_1'])">
+                                    onchange="toggleInputFields(this, ['form_number_waiver_gl', '5_hide_0', '5_hide_1']); handleCheckboxChange(this, 'B38')">
                                 <label class="custom-control-label" for="waiver_general_liability">No</label>
                                 <input type="text" id='form_number_waiver_gl' name="form_number_waiver_gl"
                                     placeholder="Enter form number (if Yes)" style="display: none;"
-                                    onchange="updateText(this, 'Waiver of Subrogation - General Liability', '5_hide_1')">
+                                    onchange="handleInputChange('B38Value', this.value)">
 
                             </div>
                         </div>
@@ -239,11 +274,11 @@
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="waiver_auto_liability"
                                     name="waiver_auto_liability"
-                                    onchange="toggleInputFields(this, ['form_number_waiver_auto', '5_hide_0', '5_hide_2'])">
+                                    onchange="toggleInputFields(this, ['form_number_waiver_auto', '5_hide_0', '5_hide_2']);handleCheckboxChange(this, 'B40')">
                                 <label class="custom-control-label" for="waiver_auto_liability">No</label>
                                 <input type="text" name="form_number_waiver_auto" id='form_number_waiver_auto'
                                     placeholder="Enter form number (if Yes)" style="display: none;"
-                                    onchange="updateText(this, 'Waiver of Subrogation - Auto Liability', '5_hide_2')">
+                                    onchange="handleInputChange('B40Value', this.value)">
 
                             </div>
                         </div>
@@ -252,11 +287,11 @@
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="waiver_work_comp"
                                     name="waiver_work_comp"
-                                    onchange="toggleInputFields(this, ['form_number_waiver_work_comp', '5_hide_0', '5_hide_3'])">
+                                    onchange="toggleInputFields(this, ['form_number_waiver_work_comp', '5_hide_0', '5_hide_3']); handleCheckboxChange(this, 'B42')">
                                 <label class="custom-control-label" for="waiver_work_comp">No</label>
                                 <input type="text" id='form_number_waiver_work_comp' name="form_number_waiver_work_comp"
                                     placeholder="Enter form number (if Yes)" style="display: none;"
-                                    onchange="updateText(this, 'Waiver of Subrogation - Work Comp', '5_hide_3')">
+                                    onchange="handleInputChange('B42Value', this.value)">
 
                             </div>
                         </div>
@@ -271,21 +306,24 @@
                         <div id="umbrella_hide" style="display: none;">
                             <label>Lines of Business Excess Over:</label>
                             <input type="text" class="form-control" name="lines_business_excess" value=""
-                                onchange="updateText(this, 'Lines of Business Excess Over', '6_hide_0')">
+                                onchange="handleInputChange('B44Value', this.value)">
 
                         </div>
 
                         <div id="general_hide0" style="display: none;">
                             <label>30 Day Notice of Cancellation:</label>
-                            <input type="text" class="form-control" name="notice_cancellation" value="">
+                            <input type="text" class="form-control" name="notice_cancellation" value=""
+                                placeholder="enter GL form number" onchange="handleInputChange('B46Value', this.value)">
+                            <input type="text" class="form-control" name="notice_cancellation" value=""
+                                placeholder="Enter Work Comp form number"
+                                onchange="handleInputChange('B47Value', this.value)">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-
-
+        <p id="new_p"></p>.
 
         <h2>Additional Information</h2>
         <div class="form-group">
@@ -294,7 +332,8 @@
         </div>
         <div class="section">
             <p><strong>Note:</strong> Words in red will need to be edited as necessary.</p>
-            <p id="gernal_doc_hide0" style="display: none;"><strong>RE:</strong> All California Operations per policy
+            <p id="gernal_doc_hide0" style="display: none;"><strong>RE:</strong> All California Operations
+                per policy
                 form</p>
         </div>
 
@@ -302,15 +341,9 @@
             <div class="title">
                 <h5>ADDITIONAL INSURED - GENERAL LIABILITY</h5>
             </div>
-            <p>For General Liability, if required by written contract, the following are included as additional
-                insureds, as required pursuant to a written contract with a named insured, per attached Policy forms
-                <span class="highlight">B28</span> and <span class="highlight">B30</span>:
+            <p id="B30">
             </p>
-            <p id="vol_hide_0" style="display: none;">THE CERTIFICATE HOLDER LISTED ON THIS CERTIFICATE OF
-                LIABILITY INSURANCE, AND (REPLACE WITH <span class="highlight">B23</span> OR leave default wording if
-                <span class="highlight">B23</span> is
-                blank) EACH OTHER PERSON OR ORGANIZATION REQUIRED TO BE INCLUDED <span class="highlight">AS/ARE</span>
-                AN ADDITIONAL INSURED PURSUANT TO A WRITTEN CONTRACT WITH THE NAMED INSURED.
+            <p id="vol_hide_0">
             </p>
         </div>
 
@@ -318,10 +351,7 @@
             <div class="title">
                 <h5>ADDITIONAL INSURED - AUTOMOBILE LIABILITY </h5>
             </div>
-            <p id="4_hide_0" style="display: none;">The Automobile Liability policy, if required by written contract,
-                includes coverage for Additional
-                Insureds as required by such written contract, per attached Policy forms <span
-                    class=" highlight">B32</span></p>
+            <p id="4_hide_0"></p>
             <p id="4_hide_1" style="display: none;"></p>
             <p id="4_hide_2" style="display: none;"></p>
         </div>
@@ -330,10 +360,8 @@
             <div class="title">
                 <h5>PRIMARY COVERAGE</h5>
             </div>
-            <p id="5_hide_0" style="display: none;">The General Liability and Automobile Liability policies/policy <span
-                    class="highlight">are/is</span>
-                primary and not excess of or contributing with other insurance, where required by written lease or
-                written CONTRACT per attached policy forms (<span class="highlight">B34, B36</span>)</p>
+            <p id="5_hide_new"></p>
+
             <p id="5_hide_1" style="display: none;"></p>
             <p id="5_hide_2" style="display: none;"></p>
             <p id="5_hide_3" style="display: none;"></p>
@@ -343,11 +371,7 @@
             <div class="title">
                 <h5>WAIVER OF SUBROGATION</h5>
             </div>
-            <p id="6_hide_1" style="display: none;">The General Liability, Automobile Liability, Workers’ Compensation
-                and Employers Liability
-                policies/policy include a Waiver of Subrogation in favor of the certholder and any other person or
-                organization, BUT ONLY to the extent required by written contract, per attached policy forms (<span
-                    class="highlight">B38, B40, B42</span>)</p>
+            <p id="6_hide_1"></p>
             <p id="6_hide_0" style="display: none;"></p>
         </div>
 
@@ -355,16 +379,15 @@
             <div class="title">
                 <h5>UMBRELLA/EXCESS LIABILITY</h5>
             </div>
-            <p>This policy is over the underlying General Liability, Automobile Liability and Employer's Liability
-                policies/policy (<span class="highlight">B44</span>)</p>
+            <p id="value67"></p>
         </div>
 
         <div class="section">
             <div class="title">
                 <h5>30 DAY NOTICE OF CANCELLATION</h5>
             </div>
-            <p>30-day Notice of Cancellation applies to General Liability and Workers' Compensation policy/policies, per
-                Endorsement form <span class="highlight">B46, B47</span>, if required by a written contract.</p>
+            <p id="value70">
+            </p>
         </div>
 
         <div class="section">
@@ -374,7 +397,7 @@
             <p><span class="highlight">B24</span></p>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
     </form>
 
 
@@ -411,10 +434,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        // function updateToggleLabel(toggle) {
-        //     const label = toggle.nextElementSibling;
-        //     label.textContent = toggle.checked ? 'Yes' : 'No';
-        // }
+        function checkSymbols(text) {
+            return /[,\/]|and|or/i.test(text) ? true : false;
+        }
         function toggleInputField(checkbox, inputId) {
             const inputField = document.getElementById(inputId);
             if (checkbox.checked) {
@@ -447,6 +469,198 @@
             console.log("displayId", displayId)
             console.log(mainText, "displayId")
             displayField.textContent = inputElement.value ? `${mainText}: ${inputElement.value}` : "";
+        }
+
+        function updateLabel(checkbox) {
+            const label = document.getElementById("cc_insured_label");
+            label.textContent = checkbox.checked ? "Yes" : "No";
+        }
+
+        function addTextToElement(elementId, additionalText) {
+            let element = document.getElementById(elementId);
+            if (element) {
+                element.innerHTML = ''
+                element.innerHTML += additionalText;  // Use textContent if you don't need HTML formatting
+            }
+        }
+        window.myVars = {
+            'B28': '',
+            'B28Value': '',
+            'B30Value': '',
+            'B30': '',
+            'B23': '',
+            'B38': '',
+            'B40': '',
+            'B42': '',
+
+
+            'B23Value': '',
+            'B32Value': '',
+            'B34Value': '',
+            'B36Value': '',
+            'B38Value': '',
+            'B40Value': '',
+            'B42Value': '',
+            'B44Value': '',
+            'B46Value': '',
+            'B47Value': '',
+
+
+
+        }
+
+
+
+        let value54 = ``
+        let value55 = ``
+        let value58 = ``
+        let value61 = ``
+        let value63 = ``
+        let value67 = ``
+        let value70 = ``
+
+        function update54Value(B28Value, B30Value, B28, B30) {
+            console.log("window.myVars", window.myVars)
+            let from_value
+            if (B28Value && B30Value && B28 && B30) {
+                from_value = "forms"
+                console.log("formsformsforms")
+            } else {
+                from_value = "form"
+            }
+            text = `For General Liability, if required by written contract, the following are included as additional
+        insureds, as required pursuant to a written contract with a named insured, per attached Policy ${from_value}
+        <span class="highlight">${B28Value}</span> and <span class="highlight"> ${B30Value}</ >: `
+            value54 = text
+
+        }
+        function Update55Value(B23Value) {
+            let B23AsAre
+            if (B23Value) {
+                B23AsAre = 'are'
+            }
+            else {
+                B23AsAre = 'as'
+            }
+            text = `THE CERTIFICATE HOLDER LISTED ON THIS CERTIFICATE OF
+                LIABILITY INSURANCE, AND(${B23Value}) EACH OTHER PERSON OR ORGANIZATION REQUIRED TO BE INCLUDED <span class="highlight"> ${B23AsAre}</ >
+            AN ADDITIONAL INSURED PURSUANT TO A WRITTEN CONTRACT WITH THE NAMED INSURED.`
+            value55 = text
+
+        }
+
+        function Update58Value(B32Value) {
+            value58 = `The Automobile Liability policy, if required by written contract,
+            includes coverage for Additional
+                Insureds as required by such written contract, per attached Policy forms <span
+        class=" highlight"> ${B32Value}</ > `
+
+
+        }
+        function Update61Value(B34Value, B36Value) {
+            let policy_text = 'policy'
+            let gr_text = 'is'
+            if (B34Value && B36Value) {
+                policy_text = 'policies'
+                gr_text = 'are'
+            }
+            value61 = `The General Liability and Automobile Liability ${policy_text} <span
+        class="highlight"> ${gr_text} </ >
+            primary and not excess of or contributing with other insurance, where required by written lease or
+                written CONTRACT per attached policy forms(<span class="highlight">${B34Value}, ${B36Value}</span>)`
+        }
+        function Update63Value(B38Value, B40Value, B42Value, B38, B40, B42) {
+            let v1_value = ''
+            let v3_value = ''
+            let v2_value = ''
+            let policy_value = ''
+            let count = [B38, B40, B42].filter(value => value !== undefined && value !== null).length;
+
+            if (count >= 2) {
+                policy_value = "policies"
+            } else {
+                policy_value = "policy"
+            }
+
+            if (B38Value) {
+                v1_value = "The General Liability"
+            }
+
+            if (B40Value) {
+                v2_value = " Automobile Liability"
+            }
+
+            if (B42Value) {
+                v3_value = `Workers'
+        Compensation
+                and Employers Liability`
+            }
+
+            value63 = `${v1_value}, ${v2_value}, ${v3_value}
+        ${policy_value} include a Waiver of Subrogation in favor of the certholder and any other
+                person or
+        organization, BUT ONLY to the extent required by written contract, per attached policy forms
+            (<span class="highlight">${B38Value}, ${B40Value}, ${B42Value}</span>)`
+        }
+
+
+        function Update67Value(B44Value) {
+            let check_pol = checkSymbols(B44Value)
+            let policy_value = "policy"
+            if (check_pol) {
+                policy_value = "policies"
+            }
+            value67 = `This policy is over the underlying General Liability, Automobile Liability and Employer's
+                Liability
+                ${policy_value} (<span class="highlight">${B44Value}</span>)`
+        }
+
+        function Update70Value(B46Value, B47Value) {
+            let policy_value = "policy"
+            if (B46Value && B47Value) {
+                policy_value = "policies"
+            }
+            value70 = `30-day Notice of Cancellation applies to General Liability and Workers' Compensation
+                ${policy_value}, per
+                Endorsement form <span class="highlight">${B46Value}, ${B47Value}</span>, if required by a written contract.`
+        }
+        function handleCheckboxChange(checkbox, varName) {
+            let value = checkbox.checked ? true : false;
+            update_var(varName, value);
+        }
+        function handleInputChange(varName, value) {
+            console.log("Variable Name:", varName);
+            window.myVars[varName] = value
+            update54Value(window.myVars['B28Value'], window.myVars['B30Value'], window.myVars['B28'], window.myVars['B30'])
+            Update55Value(window.myVars['B23Value'])
+            Update61Value(window.myVars['B34Value'], window.myVars['B36Value'])
+            Update58Value(window.myVars['B32Value'])
+            Update63Value(window.myVars['B38Value'], window.myVars['B40Value'], window.myVars['B42Value'], window.myVars['B38'], window.myVars['B40'], window.myVars['B42'])
+            Update67Value(window.myVars['B44Value'])
+            Update70Value(window.myVars['B46Value'], window.myVars['B47Value'])
+            // Enter the Tex to Document.
+            addTextToElement("B30", value54);
+            addTextToElement("vol_hide_0", value55);
+            addTextToElement("4_hide_0", value58);
+            addTextToElement("5_hide_new", value61);
+            addTextToElement("6_hide_1", value63);
+            addTextToElement("value67", value67);
+            addTextToElement("value70", value70);
+
+
+
+
+
+
+            // You can process the input value as needed
+        }
+        function update_var(variableName, value) {
+            if (typeof window.myVars === 'undefined') {
+                window.myVars = {}; // Initialize global storage if not already defined
+            }
+
+            window.myVars[variableName] = value;
+            console.log(`Updated ${variableName} to:`, value); // Debugging output
         }
 
     </script>
