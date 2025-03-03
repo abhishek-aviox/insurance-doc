@@ -298,7 +298,8 @@
                         <div id="umbrella_hide0" style="display: none;">
                             <label>Umbrella:</label>
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="umbrella_coi" name="umbrella"
+                                <input type="checkbox" class="custom-control-input" id="umbrella_coi"
+                                    name="umbrella_coi"
                                     onchange="toggleInputFields(this, ['umbrella_hide','6_hide_1', '6_hide_0' ])">
                                 <label class="custom-control-label" for="umbrella_coi">No</label>
                             </div>
@@ -312,9 +313,9 @@
 
                         <div id="general_hide0" style="display: none;">
                             <label>30 Day Notice of Cancellation:</label>
-                            <input type="text" class="form-control" name="notice_cancellation" value=""
+                            <input type="text" class="form-control" name="notice_cancellation_value1" value=""
                                 placeholder="enter GL form number" onchange="handleInputChange('B46Value', this.value)">
-                            <input type="text" class="form-control" name="notice_cancellation" value=""
+                            <input type="text" class="form-control" name="notice_cancellation_value2" value=""
                                 placeholder="Enter Work Comp form number"
                                 onchange="handleInputChange('B47Value', this.value)">
                         </div>
