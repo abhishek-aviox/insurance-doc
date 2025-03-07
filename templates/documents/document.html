@@ -44,47 +44,49 @@
         <h2>Insured Details</h2>
         <div class="form-group">
             <label>Insured Name:</label>
-            <input type="text" class="form-control" name="insured_name" value="ABC Company, Inc">
+            <input type="text" class="form-control" name="insured_name" value="ABC Company, Inc"
+                onchange="handleInputChange('InsuredName', this.value)">
         </div>
 
         <h2>Certificate Holder</h2>
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Name:</label>
-                    <input type="text" class="form-control" name="cert_holder_name"
-                        value="Mr. Builder Contracting Company Inc">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" name="cert_holder_name" value="Mr. Builder Contracting">
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="col-form-label">Name 2:</label>
+                        <input type="text" class="form-control" name="cert_holder_name2" value="Company Inc">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>City:</label>
-                    <input type="text" class="form-control" name="cert_holder_city" value="Los Angeles">
-                </div>
-                <div class="form-group">
-                    <label>Address:</label>
-                    <input type="text" class="form-control" name="cert_holder_address" value="123 Main St">
-                </div>
-
-                <div class="form-group">
-                    <label>Address 2:</label>
-                    <input type="text" class="form-control" name="cert_holder_address2" value="">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Name 2:</label>
-                    <input type="text" class="form-control" name="cert_holder_name2" value="">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label class="col-form-label">Address:</label>
+                        <input type="text" class="form-control" name="cert_holder_address" value="123 Main St">
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="col-form-label">Address 2:</label>
+                        <input type="text" class="form-control" name="cert_holder_address2" value="Test">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>State:</label>
-                    <input type="text" class="form-control" name="cert_holder_state" value="CA">
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <label class="col-form-label">City:</label>
+                        <input type="text" class="form-control" name="cert_holder_city" value="Los Angeles">
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="col-form-label">State:</label>
+                        <input type="text" class="form-control" name="cert_holder_state" value="CA" maxlength="2">
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="col-form-label">ZIP:</label>
+                        <input type="text" class="form-control" name="cert_holder_zip" value="90001" maxlength="5">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>ZIP:</label>
-                    <input type="text" class="form-control" name="cert_holder_zip" value="90001">
-                </div>
-
             </div>
         </div>
 
@@ -112,7 +114,7 @@
                 </div>
                 <div class="form-group">
                     <label>Subject:</label>
-                    <input type="text" class="form-control" name="subject_line" value="">
+                    <input type="text" class="form-control" name="subject_line" value="" disabled>
                 </div>
             </div>
         </div>
@@ -177,7 +179,8 @@
                 <div class="form-group">
 
                     <input type="text" class="form-control" name="job_location"
-                        value="1000 Wiltshire, Beverly Hills, CA 90210">
+                        value="1000 Wiltshire, Beverly Hills, CA 90210"
+                        onchange="handleInputChange('JobLocation', this.value)">
                 </div>
             </div>
         </div>
@@ -395,7 +398,8 @@
             <div class="title">
                 <h5>Job Location</h5>
             </div>
-            <p><span class="highlight">B24</span></p>
+            <p><span id="mySpan">B24</span></p>
+
         </div>
 
         <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
@@ -505,8 +509,8 @@
             'B44Value': '',
             'B46Value': '',
             'B47Value': '',
-
-
+            'InsuredName': '',
+            'JobLocation': '',
 
         }
 
@@ -531,11 +535,12 @@
             }
             text = `For General Liability, if required by written contract, the following are included as additional
         insureds, as required pursuant to a written contract with a named insured, per attached Policy ${from_value}
-        <span class="highlight">${B28Value}</span> and <span class="highlight"> ${B30Value}</ >: `
+        <span class="highlight">${B28Value}</span> and <spans class="highlight"> ${B30Value}</spans > `
             value54 = text
 
         }
         function Update55Value(B23Value) {
+            console.log("11111111111111111111111111111")
             let B23AsAre
             if (B23Value) {
                 B23AsAre = 'are'
@@ -544,7 +549,7 @@
                 B23AsAre = 'as'
             }
             text = `THE CERTIFICATE HOLDER LISTED ON THIS CERTIFICATE OF
-                LIABILITY INSURANCE, AND(${B23Value}) EACH OTHER PERSON OR ORGANIZATION REQUIRED TO BE INCLUDED <span class="highlight"> ${B23AsAre}</ >
+                LIABILITY INSURANCE, AND ${B23Value} EACH OTHER PERSON OR ORGANIZATION REQUIRED TO BE INCLUDED <span class="highlight"> ${B23AsAre}</ >
             AN ADDITIONAL INSURED PURSUANT TO A WRITTEN CONTRACT WITH THE NAMED INSURED.`
             value55 = text
 
@@ -568,7 +573,7 @@
             value61 = `The General Liability and Automobile Liability ${policy_text} <span
         class="highlight"> ${gr_text} </ >
             primary and not excess of or contributing with other insurance, where required by written lease or
-                written CONTRACT per attached policy forms(<span class="highlight">${B34Value}, ${B36Value}</span>)`
+                written CONTRACT per attached policy forms<span class="highlight">${B34Value}, ${B36Value}</span>`
         }
         function Update63Value(B38Value, B40Value, B42Value, B38, B40, B42) {
             let v1_value = ''
@@ -629,6 +634,12 @@
             let value = checkbox.checked ? true : false;
             update_var(varName, value);
         }
+        function setSubject(value) {
+            document.querySelector('input[name="subject_line"]').value = value;
+        }
+        function changeLocationSpanValue(newValue) {
+            document.getElementById('mySpan').textContent = newValue;
+        }
         function handleInputChange(varName, value) {
             console.log("Variable Name:", varName);
             window.myVars[varName] = value
@@ -647,6 +658,8 @@
             addTextToElement("6_hide_1", value63);
             addTextToElement("value67", value67);
             addTextToElement("value70", value70);
+            setSubject(window.myVars['InsuredName'])
+            changeLocationSpanValue(window.myVars['JobLocation'])
 
 
 
